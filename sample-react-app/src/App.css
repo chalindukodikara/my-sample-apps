@@ -1,0 +1,54 @@
+.App {
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  transition: background-color 0.5s ease, color 0.5s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.App.dark-mode .App-header {
+  background-color: #ffffff;
+  color: #282c34;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.App.dark-mode button {
+  background-color: #282c34;
+  color: #ffffff;
+}
+
+.box {
+  width: 300px;
+  height: 300px;
+  background-color: lightgray;
+  position: relative;
+  border: 2px solid #000;
+  margin-top: 20px;
+}
+
+.moving-content {
+  width: 50px;
+  height: 50px;
+  background-color: red;
+  position: absolute;
+  transition: left 0.03s linear, top 0.03s linear;
+}
