@@ -1,5 +1,5 @@
 # Use the official Node.js 14 image as the base image
-FROM node:14
+FROM node:14-buster AS build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install the project dependencies
-RUN npm install
+RUN npm set network-timeout 600000 && npm ci --prefer-offline
 
 # Copy the rest of the project files to the container
 COPY . .
@@ -16,10 +16,18 @@ COPY . .
 # Build the React app
 RUN npm run build
 
+# Use a lighter image for serving the built app
+FROM node:14-buster-slim
+
 # Install a simple HTTP server to serve the static files
 RUN npm install -g serve
 
-USER 10016
+# Copy the build output from the previous stage
+COPY --from=build /app/build /app/build
+
+# Use a non-root user for security reasons
+RUN adduser --disabled-password --gecos '' appuser
+USER appuser
 
 # Expose port 8080 to the outside world
 EXPOSE 8080
